@@ -16,12 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from citasmd import views
 from citasmd.views import  agregar_citasmd, ver_citasmd, editar_citasmd, eliminar_citasmd, generar_reporte
 from rest_framework import routers
-from webapp import views
 from webapp.views import  mostrar_citasmd
 router = routers.DefaultRouter()
-router.register(r'citasmds', views.UserViewSet)
+router.register(r'citasmds', views.CitasMdViewSet)
+router.register(r'doctores', views.DoctorViewSet)
+router.register(r'especialidades', views.EspecialidadViewSet)
+router.register(r'pacientes', views.PacienteViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,10 +1,12 @@
+from citasmd.serializers import CitasMdSerializer, DoctorSerializer, EspecialidadSerializer, PacienteSerializer
 from django.forms import modelform_factory
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from openpyxl import Workbook
 from citasmd.forms import CitasMdFormulario
-from citasmd.models import CitasMd
+from citasmd.models import CitasMd, Doctor, Especialidad, Paciente
+from rest_framework import viewsets, permissions
 
 
 # Create your views here.
@@ -99,3 +101,29 @@ def generar_reporte(request):
         response["Content-Disposition"] = contenido
         wb.save(response)
         return response
+
+class CitasMdViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = CitasMd.objects.all().order_by('paciente')
+    serializer_class = CitasMdSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class DoctorViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Doctor.objects.all()
+    serializer_class = DoctorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class EspecialidadViewSet(viewsets.ModelViewSet):
+    queryset = Especialidad.objects.all()
+    serializer_class = EspecialidadSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class PacienteViewSet(viewsets.ModelViewSet):
+    queryset = Paciente.objects.all()
+    serializer_class = PacienteSerializer
+    permission_classes = [permissions.IsAuthenticated]

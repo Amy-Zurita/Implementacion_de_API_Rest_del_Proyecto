@@ -34,4 +34,4 @@ class CitasMd(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True)
     paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True)
     def __str__(self):
-        return f'id: {self.fecha_cita} '
+        return f'id: {self.fecha_cita}'
